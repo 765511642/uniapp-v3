@@ -5,13 +5,17 @@
         <wd-popup v-model="show" position="bottom" @close="handleClose">
             <text class="custom-txt">弹弹弹</text>
         </wd-popup>
+        <wd-toast />
+
     </MainLayout>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { onShow, onLoad, onHide } from "@dcloudio/uni-app";
-import MainLayout from '@/layouts/MainLayout.vue';
+import MainLayout from '@src/layouts/MainLayout.vue';
+import { useToast } from '@uni_modules/wot-design-uni'
+const toast = useToast()
 
 const test = ref('Hello Uni-app');
 let show = ref(false);
@@ -22,7 +26,8 @@ onHide(() => {
 onShow(() => {
 });
 const open = () => {
-    show.value = true;
+    // show.value = true;
+    toast.show('提示信息')
 }
 </script>
 <style lang="scss" scoped>
