@@ -1,15 +1,13 @@
-import { createRouter } from 'uni-mini-router'
+import { createRouter } from 'uni-mini-router';
 const router = createRouter({
-  routes: [...ROUTES] // 路由表信息
-})
+	routes: [...ROUTES]
+});
+
 router.beforeEach((to, from, next) => {
-  // next入参 false 以取消导航
-  console.log(to)
-  console.log(from) 
-  next()
-})
-router.afterEach((to, from) => {
-  console.log(to)
-  console.log(from)
-})
-export default router
+	console.log('to', to);
+	next();
+});
+
+router.afterEach(() => {});
+
+export default router;
