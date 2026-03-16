@@ -24,8 +24,11 @@ onLoad(() => {});
 onHide(() => {});
 onShow(() => {});
 const goToHome = () => {
+	// router.push({
+	// 	name: 'subPages-test-test1'
+	// });
 	router.push({
-		name: 'subPages-test'
+		path: '/subPages-test/test1'
 	});
 };
 </script>

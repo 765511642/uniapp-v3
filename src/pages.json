@@ -46,7 +46,7 @@
 			"pages": [
 				{
 					"path": "test1",
-					"name": "subPages-test",
+					"name": "subPages-test-test1",
 					"style": {
 						"navigationBarTitleText": "测试页面 1"
 					}
