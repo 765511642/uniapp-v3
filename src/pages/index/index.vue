@@ -13,17 +13,21 @@
 <script setup>
 import { ref } from 'vue';
 import { onShow, onLoad, onHide } from "@dcloudio/uni-app";
-import MainLayout from '@src/layouts/MainLayout.vue';
-import { useToast } from '@uni_modules/wot-design-uni'
-const toast = useToast()
+import MainLayout from '@/layouts/MainLayout.vue';
+import { useToast } from '@uni_modules/wot-design-uni';
+import { useTabbarStore } from '@/stores/tabbar';
+
+const toast = useToast();
+const tabbarStore = useTabbarStore();
 
 const test = ref('Hello Uni-app');
 let show = ref(false);
-onLoad(() => {
-})
-onHide(() => {
-})
+onLoad(() => {});
+onHide(() => {});
 onShow(() => {
+	const pages = getCurrentPages();
+	const route = pages[pages.length - 1]?.route;
+	if (route) tabbarStore.updateCurrentPath('/' + route);
 });
 const open = () => {
     // show.value = true;

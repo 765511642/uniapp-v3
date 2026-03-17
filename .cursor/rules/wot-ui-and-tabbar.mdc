@@ -1,0 +1,31 @@
+---
+description: Wot UI 组件库与底部 Tabbar 使用约定，参考 wot-starter
+globs: "**/*.vue"
+alwaysApply: true
+---
+
+# Wot UI 与底部 Tabbar 约定
+
+## 组件库
+
+- **统一使用 [Wot UI](https://wot-ui.cn/)（wot-design-uni）**，不混用微信小程序原生自定义组件做 UI。
+- 组件已通过 `@uni-helper/vite-plugin-uni-components` + `WotResolver` 按需引入，直接使用 `<wd-*>` 即可，无需手动 import。
+- 文档与 API 以官网为准：<https://wot-ui.cn/component/tabbar.html> 等。
+
+## 底部 Tabbar
+
+- **底部导航使用 Wot UI 的 Tabbar**（`wd-tabbar` + `wd-tabbar-item`），**不采用**微信小程序官方的 `custom-tab-bar` 方案。
+- 页面跳转仍用 `uni.switchTab`，需在 `pages.json` 的 `tabBar.list` 中配置 tab 页；Tabbar 的选中状态用 `v-model` 绑定（索引或 `name`），与当前页同步时可配合 Pinia 或路由。
+- 固定底部时使用 `fixed`、`placeholder`、`safeAreaInsetBottom`，见 [Tabbar 文档 - 固定底部](https://wot-ui.cn/component/tabbar.html#固定底部)。
+
+```vue
+<!-- 示例：Wot UI Tabbar 固定底部、占位、安全区 -->
+<wd-tabbar v-model="tabbar" fixed placeholder safeAreaInsetBottom bordered @change="onTabChange">
+  <wd-tabbar-item name="home" title="首页" icon="home" />
+  <wd-tabbar-item name="mine" title="我的" icon="user" />
+</wd-tabbar>
+```
+
+## 项目参考
+
+- 工程结构与写法可参考 [wot-starter](https://github.com/wot-ui/wot-starter)（基于 vitesse-uni-app + Wot UI）。
