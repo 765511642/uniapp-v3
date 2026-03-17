@@ -22,7 +22,9 @@
 │   ├── project-info.mdc        # 项目信息、命令、目录结构
 │   ├── tech-stack.mdc          # 技术栈、状态管理、路由、代码规范
 │   └── ui-guidelines.mdc       # UI 组件库、全局反馈、布局、样式约定
-├── .vscode/settings.json       # VS Code 项目级设置（ESLint 格式化）
+├── .vscode/
+│   ├── settings.json           # VS Code 项目级设置（ESLint 格式化）
+│   └── extensions.json         # 推荐扩展（Volar、ESLint、UniApp、Wot UI）
 ├── .editorconfig               # 跨编辑器代码风格配置
 ├── eslint.config.mjs           # ESLint 配置
 ├── .env.dev                    # 开发环境变量
@@ -118,7 +120,20 @@ pnpm lint:fix      # 自动修复
 主要规则：
 - 缩进：4 空格，禁止 Tab
 - Vue 文件块顺序：`<script>` → `<template>` → `<style>`
+- 禁止使用 Vue 2 的 `mixins`，使用 composables 替代
+- 禁止使用 `wx.xxx`，统一使用 `uni.xxx`
 - 保存时自动修复（通过 VS Code `codeActionsOnSave`）
+
+### 推荐扩展
+
+`.vscode/extensions.json` 配置了项目推荐扩展，打开项目时会提示安装：
+
+| 扩展 | 作用 |
+|------|------|
+| Volar | Vue 3 语法高亮、智能提示 |
+| ESLint | 代码检查与自动修复 |
+| uni-app-schemas | `pages.json`、`manifest.json` 智能提示 |
+| wot-design-uni-helper | Wot UI 组件属性提示 |
 
 ### EditorConfig
 
@@ -145,10 +160,12 @@ pnpm lint:fix      # 自动修复
 ### 开发约定
 
 - **UI 组件**：统一使用 Wot UI（`<wd-*>`），组件自动按需导入，无需手动 import
+- **API 调用**：统一使用 `uni.xxx`，禁止使用 `wx.xxx`
 - **反馈组件**：禁止直接调用 `uni.showToast` / `useToast` 等，统一使用 `@/composables/feedback/` 下的封装
 - **页面跳转**：统一使用 `uni-mini-router`，禁止直接写 `uni.navigateTo`
 - **布局**：主包页面统一使用 `<MainLayout>`
 - **Tabbar**：使用 Wot UI Tabbar，不使用微信原生 `custom-tab-bar`
+- **禁止 mixins**：使用 Vue 3 composables（组合式函数）替代
 
 ## 开发命令
 

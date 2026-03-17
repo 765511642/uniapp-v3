@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "Vue.volar",
+        "dbaeumer.vscode-eslint",
+        "uni-helper.uni-app-schemas-vscode",
+        "pj-wot-design-uni.wot-design-uni-helper"
+    ]
+}
