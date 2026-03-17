@@ -2,3 +2,11 @@
 page {
     background: #fbfbfb;
 }
+
+/* Wot UI 徽标圆角：真机端为方形时强制为圆角/圆形 */
+.wd-badge__content {
+    border-radius: 999px;
+}
+.wd-badge__content.is-dot {
+    border-radius: 50%;
+}
