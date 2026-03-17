@@ -4,6 +4,7 @@ import path from 'path'
 import TransformPages from 'uni-read-pages-vite'
 import Components from '@uni-helper/vite-plugin-uni-components'
 import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
+import Optimization from '@uni-ku/bundle-optimizer'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -11,6 +12,10 @@ export default defineConfig({
       resolvers: [WotResolver()]  // 自动引入wot-design-uni组件
     }),
     uni(),
+    Optimization({
+      enable: true,
+      logger: false,
+    }),
   ],
   resolve: {
     alias: {
