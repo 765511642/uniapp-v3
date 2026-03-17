@@ -1,50 +1,17 @@
-<template>
-    <view class="tabbar-fixed">
-        <wd-tabbar
-            :model-value="tabbarStore.activeName"
-            fixed
-            placeholder
-            safe-area-inset-bottom
-            bordered
-            :active-color="tabbarStore.activeColor"
-            :inactive-color="tabbarStore.inactiveColor"
-            @change="handleTabbarChange"
-        >
-        <wd-tabbar-item
-            v-for="item in tabbarStore.getTabs"
-            :key="item.name"
-            :name="item.name"
-            :title="item.title"
-        >
-            <template #icon="{ active }">
-                <wd-badge
-                    :model-value="tabbarStore.getTabbarItemValue(item.name)"
-                    :is-dot="tabbarStore.getTabbarItemIsDot(item.name)"
-                    :hidden="isBadgeHidden(item.name)"
-                    :max="99"
-                >
-                    <image
-                        v-if="tabbarStore.useIconPath(item)"
-                        :src="active && item.selectedIconPath ? item.selectedIconPath : item.iconPath"
-                        class="tabbar-icon-img"
-                    />
-                    <wd-icon
-                        v-else
-                        :name="item.icon"
-                        size="22px"
-                        :style="{ color: active ? tabbarStore.activeColor : tabbarStore.inactiveColor }"
-                    />
-                </wd-badge>
-            </template>
-        </wd-tabbar-item>
-        </wd-tabbar>
-    </view>
-</template>
-
 <script setup>
+import { nextTick, onMounted } from 'vue'
 import { useTabbarStore } from '@/stores/tabbar'
 
 const tabbarStore = useTabbarStore()
+
+onMounted(() => {
+    nextTick(() => {
+        const pages = getCurrentPages()
+        const route = pages.at(-1)?.route
+        if (route)
+            tabbarStore.updateCurrentPath(`/${route}`)
+    })
+})
 
 function handleTabbarChange({ value }) {
     tabbarStore.switchByName(value)
@@ -57,6 +24,49 @@ function isBadgeHidden(name) {
     return value == null && !isDot
 }
 </script>
+
+<template>
+    <view class="tabbar-fixed">
+        <wd-tabbar
+            :model-value="tabbarStore.activeName"
+            fixed
+            placeholder
+            safe-area-inset-bottom
+            bordered
+            :active-color="tabbarStore.activeColor"
+            :inactive-color="tabbarStore.inactiveColor"
+            @change="handleTabbarChange"
+        >
+            <wd-tabbar-item
+                v-for="item in tabbarStore.getTabs"
+                :key="item.name"
+                :name="item.name"
+                :title="item.title"
+            >
+                <template #icon="{ active }">
+                    <wd-badge
+                        :model-value="tabbarStore.getTabbarItemValue(item.name)"
+                        :is-dot="tabbarStore.getTabbarItemIsDot(item.name)"
+                        :hidden="isBadgeHidden(item.name)"
+                        :max="99"
+                    >
+                        <image
+                            v-if="tabbarStore.useIconPath(item)"
+                            :src="active && item.selectedIconPath ? item.selectedIconPath : item.iconPath"
+                            class="tabbar-icon-img"
+                        />
+                        <wd-icon
+                            v-else
+                            :name="item.icon"
+                            size="22px"
+                            :style="{ color: active ? tabbarStore.activeColor : tabbarStore.inactiveColor }"
+                        />
+                    </wd-badge>
+                </template>
+            </wd-tabbar-item>
+        </wd-tabbar>
+    </view>
+</template>
 
 <style scoped>
 .tabbar-fixed {

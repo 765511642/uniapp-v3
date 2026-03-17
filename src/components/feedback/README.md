@@ -19,7 +19,7 @@
 ## Loading
 
 ```js
-import { useGlobalLoading } from '@/composables/useGlobalLoading'
+import { useGlobalLoading } from '@/composables/feedback/useGlobalLoading'
 
 const loading = useGlobalLoading()
 
@@ -36,7 +36,7 @@ loading.close()
 ## Toast
 
 ```js
-import { useGlobalToast } from '@/composables/useGlobalToast'
+import { useGlobalToast } from '@/composables/feedback/useGlobalToast'
 
 const toast = useGlobalToast()
 
@@ -68,7 +68,7 @@ toast.close()
 ## Message
 
 ```js
-import { useGlobalMessage } from '@/composables/useGlobalMessage'
+import { useGlobalMessage } from '@/composables/feedback/useGlobalMessage'
 
 const message = useGlobalMessage()
 

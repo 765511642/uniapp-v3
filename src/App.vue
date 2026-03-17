@@ -1,5 +1,5 @@
 <script setup>
-import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
+import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
 
 onLaunch(() => {})
 onShow(() => {})

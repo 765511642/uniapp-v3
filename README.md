@@ -11,7 +11,9 @@
 | 状态管理 | Pinia | [pinia.vuejs.org](https://pinia.vuejs.org/) |
 | 路由 | uni-mini-router | [文档](https://moonofweisheng.github.io/uni-mini-router/) |
 | 虚拟根组件 | @uni-ku/root | [uni-ku.js.org](https://uni-ku.js.org/projects/root) |
+| 组件自动导入 | @uni-helper/vite-plugin-uni-components | - |
 | 包体优化 | @uni-ku/bundle-optimizer | - |
+| 代码检查 & 格式化 | ESLint + @uni-helper/eslint-config | - |
 
 ## 项目结构
 
@@ -31,9 +33,10 @@ src/
 │       ├── GlobalToast.vue
 │       └── GlobalMessage.vue
 ├── composables/              # 组合式函数 / Pinia Store
-│   ├── useGlobalLoading.js
-│   ├── useGlobalToast.js
-│   └── useGlobalMessage.js
+│   └── feedback/
+│       ├── useGlobalLoading.js
+│       ├── useGlobalToast.js
+│       └── useGlobalMessage.js
 ├── stores/
 │   ├── tabbar.js             # Tabbar 配置与状态
 │   └── user.js               # 用户信息与登录状态
@@ -86,6 +89,42 @@ router.replace({ path: '/pages/index/index' })
 router.pushTab({ path: '/pages/api/index' })  // Tab 页跳转
 ```
 
+## 代码规范
+
+### ESLint
+
+项目使用 `@uni-helper/eslint-config` 作为 ESLint 预设，ESLint 同时负责**代码检查**和**格式化**，不使用 Prettier。
+
+```bash
+pnpm lint          # 检查
+pnpm lint:fix      # 自动修复
+```
+
+主要规则：
+- 缩进：4 空格，禁止 Tab
+- Vue 文件块顺序：`<script>` → `<template>` → `<style>`
+- 保存时自动修复（通过 VS Code `codeActionsOnSave`）
+
+### EditorConfig
+
+`.editorconfig` 统一编辑器基础风格：
+
+| 配置 | 值 |
+|------|------|
+| 缩进 | 4 空格 |
+| 换行符 | LF |
+| 编码 | UTF-8 |
+| 末尾换行 | 是 |
+| 尾部空格 | 自动删除 |
+
+### 开发约定
+
+- **UI 组件**：统一使用 Wot UI（`<wd-*>`），组件自动按需导入，无需手动 import
+- **反馈组件**：禁止直接调用 `uni.showToast` / `useToast` 等，统一使用 `@/composables/feedback/` 下的封装
+- **页面跳转**：统一使用 `uni-mini-router`，禁止直接写 `uni.navigateTo`
+- **布局**：主包页面统一使用 `<MainLayout>`
+- **Tabbar**：使用 Wot UI Tabbar，不使用微信原生 `custom-tab-bar`
+
 ## 开发命令
 
 ```bash
@@ -93,10 +132,16 @@ router.pushTab({ path: '/pages/api/index' })  // Tab 页跳转
 pnpm install
 
 # 微信小程序开发模式
-npm run dev
+pnpm dev
 
 # 构建发布
-npm run build
+pnpm build
+
+# 代码检查
+pnpm lint
+
+# 代码检查 + 自动修复
+pnpm lint:fix
 ```
 
 构建产物在 `dist/dev/mp-weixin`（开发）或 `dist/build/mp-weixin`（发布），用微信开发者工具导入运行。

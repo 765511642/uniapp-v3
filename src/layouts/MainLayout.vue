@@ -1,3 +1,7 @@
+<script setup>
+import LayoutTabbar from '@/layouts/tabbar.vue'
+</script>
+
 <template>
     <view class="layout">
         <view class="layout-content">
@@ -6,10 +10,6 @@
         <LayoutTabbar />
     </view>
 </template>
-
-<script setup>
-import LayoutTabbar from '@/layouts/tabbar.vue'
-</script>
 
 <style scoped>
 .layout {

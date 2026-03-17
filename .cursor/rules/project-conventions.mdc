@@ -19,6 +19,13 @@ alwaysApply: true
 - 底部导航使用 **Wot UI 的 Tabbar**（`layouts/tabbar.vue` 中的 `wd-tabbar`），不采用微信官方的 `custom-tab-bar`；配置与状态在 `stores/tabbar.js`。
 - 非主包或未使用 MainLayout 的页面，需自行处理底部安全距离（如 `env(safe-area-inset-bottom)`）。
 
+## 全局反馈组件
+
+- Toast、Loading、Message 统一使用封装的全局反馈组件，**禁止**直接使用 `uni.showToast`、`uni.showLoading`、`uni.showModal` 或 Wot UI 的 `useToast`、`useMessage`。
+- 引入路径：`@/composables/feedback/useGlobalLoading`、`@/composables/feedback/useGlobalToast`、`@/composables/feedback/useGlobalMessage`。
+- 组件已挂载在虚拟根组件 `App.ku.vue` 中，所有页面共享，无需单独引入。
+- 详细 API 见 `src/components/feedback/README.md`。
+
 ## 页面跳转
 
 - **跳转统一使用 [uni-mini-router](https://moonofweisheng.github.io/uni-mini-router/guide/installation.html)**，不要直接写 `uni.navigateTo` / `uni.redirectTo` / `uni.reLaunch`。
