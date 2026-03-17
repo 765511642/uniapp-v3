@@ -21,7 +21,7 @@
                     :model-value="tabbarStore.getTabbarItemValue(item.name)"
                     :is-dot="tabbarStore.getTabbarItemIsDot(item.name)"
                     :hidden="isBadgeHidden(item.name)"
-                    max="99"
+                    :max="99"
                 >
                     <image
                         v-if="tabbarStore.useIconPath(item)"

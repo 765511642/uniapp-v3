@@ -12,28 +12,21 @@
 
 <script setup>
 import { ref } from 'vue';
-import { onShow, onLoad, onHide } from '@dcloudio/uni-app';
+import { onShow } from '@dcloudio/uni-app';
 import MainLayout from '@/layouts/MainLayout.vue';
 import { useRouter } from 'uni-mini-router';
-import { useUserStore } from '@/stores/user.js';
 import { useTabbarStore } from '@/stores/tabbar';
 
 const router = useRouter();
-const userStore = useUserStore();
 const tabbarStore = useTabbarStore();
 const test = ref('Hello Uni-app');
 
-onLoad(() => {});
-onHide(() => {});
 onShow(() => {
 	const pages = getCurrentPages();
 	const route = pages[pages.length - 1]?.route;
 	if (route) tabbarStore.updateCurrentPath('/' + route);
 });
 const goToHome = () => {
-	// router.push({
-	// 	name: 'subPages-test-test1'
-	// });
 	router.push({
 		path: '/subPages-test/test1'
 	});
