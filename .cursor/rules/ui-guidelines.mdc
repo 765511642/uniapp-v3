@@ -26,7 +26,7 @@ alwaysApply: false
 - 主包页面统一使用 `MainLayout`（`@/layouts/MainLayout.vue`）
 - **TabBar**: `src/layouts/tabbar.vue`，基于 Wot UI 的 `wd-tabbar`
 - Tabbar 配置与状态在 `src/stores/tabbar.js`
-- **不使用**微信官方的 `custom-tab-bar`
+- **不使用**微信官方的 `custom-tab-bar`，项目中也不存在 `custom-tab-bar` 目录，无需创建
 - 非主包或未使用 MainLayout 的页面，需自行处理底部安全距离
 
 ## 样式约定

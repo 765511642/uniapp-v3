@@ -23,7 +23,6 @@ export default uni(
         },
         ignores: [
             'src/uni_modules/**/*',
-            'custom-tab-bar/**/*',
             '**/*.md',
         ],
     },
