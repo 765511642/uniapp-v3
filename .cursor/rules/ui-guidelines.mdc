@@ -1,0 +1,35 @@
+---
+description: UI/UX 指南、样式规范和组件使用
+globs: **/*.vue, **/*.scss, **/*.css, src/components/**/*
+alwaysApply: false
+---
+
+# UI 与样式指南
+
+## 组件库
+- **核心库**: `wot-design-uni`（`wd-` 前缀）
+- **文档**: [wot-design-uni](https://wot-ui.cn)
+- 组件已通过 `@uni-helper/vite-plugin-uni-components` + `WotResolver` 按需引入，直接使用 `<wd-*>` 即可，无需手动 import
+- **禁止**混用微信小程序原生自定义组件做 UI
+
+## 全局反馈
+- **禁止**直接使用 `uni.showToast`、`uni.showLoading`、`uni.showModal`
+- **禁止**直接使用 Wot UI 的 `useToast`、`useMessage`
+- 统一使用封装的全局反馈组件：
+  - `@/composables/feedback/useGlobalLoading`
+  - `@/composables/feedback/useGlobalToast`
+  - `@/composables/feedback/useGlobalMessage`
+- 组件已挂载在虚拟根组件 `App.ku.vue` 中，所有页面共享
+- 详细 API 见 `src/components/feedback/README.md`
+
+## 布局
+- 主包页面统一使用 `MainLayout`（`@/layouts/MainLayout.vue`）
+- **TabBar**: `src/layouts/tabbar.vue`，基于 Wot UI 的 `wd-tabbar`
+- Tabbar 配置与状态在 `src/stores/tabbar.js`
+- **不使用**微信官方的 `custom-tab-bar`
+- 非主包或未使用 MainLayout 的页面，需自行处理底部安全距离
+
+## 样式约定
+- 使用 SCSS 或普通 CSS
+- 全局样式放在 `src/css/global.css`
+- 组件样式使用 `<style scoped>` 或 `<style lang="scss" scoped>`

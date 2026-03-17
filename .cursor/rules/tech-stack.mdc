@@ -1,0 +1,33 @@
+---
+description: 核心技术栈、架构和代码规范
+globs: src/stores/**/*, src/composables/**/*, src/router/**/*, src/pages/**/*
+alwaysApply: false
+---
+
+# 技术栈与架构
+
+## 架构概览
+- **表现层**: `src/pages` (视图) + `src/components` (UI 组件)
+- **状态层**: `src/stores` (Pinia) + `src/composables` (组合式函数)
+- **路由层**: `src/router` (uni-mini-router)
+
+## 状态管理 (Pinia)
+- 使用 `defineStore` 定义 store，遵循 `use{Name}Store` 命名规范
+- 全局反馈相关的 store 放在 `src/composables/feedback/` 下
+- 业务 store 放在 `src/stores/` 下
+
+## 路由
+- **库**: `uni-mini-router`
+- 使用 `useRouter()` 进行 push/replace/back 操作
+- Tab 页跳转使用 `router.pushTab()`
+- 路由表由 `uni-read-pages-vite` 从 `pages.json` 自动注入
+- **禁止**直接使用 `uni.navigateTo` / `uni.redirectTo` / `uni.reLaunch`
+
+## 代码规范
+- **语言**: JavaScript（非 TypeScript）
+- **ESLint**: 使用 `@uni-helper/eslint-config`，ESLint 同时负责代码检查和格式化，不使用 Prettier
+- **缩进**: 4 空格，禁止 Tab
+- **Vue 文件块顺序**: `<script>` → `<template>` → `<style>`
+- **禁止使用 Vue 2 的 `mixins`**，使用 Vue 3 的 composables（组合式函数）替代
+- 组合式函数放在 `src/composables/` 下，遵循 `use{Name}` 命名规范
+- **禁止使用 `wx.xxx`**，统一使用 `uni.xxx` API，确保跨平台兼容性

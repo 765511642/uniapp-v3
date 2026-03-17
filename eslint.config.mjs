@@ -6,7 +6,6 @@ export default uni(
             globals: {
                 getCurrentPages: 'readonly',
                 uni: 'readonly',
-                wx: 'readonly',
                 getApp: 'readonly',
             },
         },
@@ -19,6 +18,8 @@ export default uni(
             'vue/script-indent': ['error', 4, { baseIndent: 0 }],
             'jsonc/indent': ['error', 4],
             'yaml/indent': ['error', 4],
+            'vue/no-restricted-component-options': ['error', 'mixins'],
+            'no-restricted-globals': ['error', { name: 'wx', message: '禁止使用 wx.xxx，请使用 uni.xxx 替代' }],
         },
         ignores: [
             'src/uni_modules/**/*',
