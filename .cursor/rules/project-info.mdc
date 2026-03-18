@@ -6,6 +6,11 @@ alwaysApply: true
 
 # 项目信息与工作流
 
+## 项目定位（必读）
+- **本项目为 uni-app 微信小程序项目**，所有理解与实现均按 **uni-app 小程序** 语境进行。
+- 运行环境是微信小程序，不是 H5 或 App；API、生命周期、包体积限制、分包规则等均以小程序为准。
+- 选型、写代码、推荐依赖时需考虑小程序包体积与运行限制，避免使用仅适用于 H5/Node 的写法或过重依赖。
+
 ## 快速开始
 - **开发**: `pnpm dev` (微信小程序开发模式)
 - **构建**: `pnpm build` (生产环境), `pnpm build:test` (测试环境)
@@ -21,6 +26,8 @@ alwaysApply: true
 - `src/stores`: Pinia 状态管理模块
 - `src/layouts`: 布局组件（MainLayout、Tabbar）
 - `src/router`: 路由配置（uni-mini-router）
+- `src/utils`: 通用工具（indexUtils、objectUtils、urlParamsUtils、storageUtils）
+- `src/verification`: 校验工具（typeValidate、formValidate）
 - `src/css`: 全局样式
 
 ## 环境配置
@@ -28,7 +35,15 @@ alwaysApply: true
 - `.env.test` — 测试环境
 - `.env.production` — 生产环境
 
-## 虚拟根组件
-- `src/App.ku.vue` 是通过 `@uni-ku/root` 实现的虚拟根组件
-- `<KuRootView />` 标记页面渲染位置，全局只能有一个
-- 全局反馈组件（GlobalLoading、GlobalToast、GlobalMessage）挂载于此
+## 虚拟根组件与入口分工
+- `src/App.vue`：应用入口，**全局生命周期（onLaunch/onShow/onHide）与全局 JS 脚本只能在此文件中编写**；小程序中其模板不参与渲染，页面结构由 App.ku.vue 提供。
+- `src/App.ku.vue`：通过 `@uni-ku/root` 实现的虚拟根组件，**不可编写全局生命周期及 JS 脚本**；仅负责挂载 `<KuRootView />` 与全局反馈组件（GlobalLoading、GlobalToast、GlobalMessage）。`<KuRootView />` 全局只能有一个。
+
+## 工具与依赖使用约定
+- **日期处理**：统一使用 **dayjs**（已安装），时间戳转日期、格式化（`YYYY-MM-DD` / `YYYY/MM/DD` 等）均用 dayjs，不引入其他日期库。
+- **通用工具**：防抖、节流、深拷贝、数组合并/去重/查找、URL 查询串与 trim 等，统一使用 `src/utils` 下对应文件，不重复实现、不引入同类第三方库。
+  - `@/utils/indexUtils`：debounce、throttle、once
+  - `@/utils/objectUtils`：deepClone、mergeObjects、uniqueArray、findInArray
+  - `@/utils/urlParamsUtils`：objToQuery、queryToObj、trim
+  - `@/utils/storageUtils`：setItem、getItem、removeItem、clearStorage（本地缓存，基于 uni Storage）
+- **类型与校验**：基础类型判断用 `@/verification/typeValidate`（isString、isNumber 等）；表单校验（手机号、邮箱、金额、非空、长度等）用 `@/verification/formValidate`，组合校验用 validateForm。

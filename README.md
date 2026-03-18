@@ -14,6 +14,7 @@
 | 组件自动导入 | @uni-helper/vite-plugin-uni-components | - |
 | 包体优化 | @uni-ku/bundle-optimizer | - |
 | 代码检查 & 格式化 | ESLint + @uni-helper/eslint-config | - |
+| 日期处理 | dayjs | [dayjs](https://day.js.org/) |
 
 ## 项目结构
 
@@ -32,8 +33,8 @@
 ├── .env.production             # 生产环境变量
 ├── vite.config.js              # Vite 配置
 └── src/
-    ├── App.vue                 # 应用入口（小程序中不渲染模板）
-    ├── App.ku.vue              # 虚拟根组件，全局组件挂载于此
+    ├── App.vue                 # 应用入口，全局生命周期与脚本仅在此编写（模板不参与渲染）
+    ├── App.ku.vue              # 虚拟根组件，不可写全局生命周期/脚本，仅挂载 KuRootView 与全局反馈组件
     ├── main.js                 # 应用初始化
     ├── pages.json              # 页面路由与 tabBar 配置
     ├── pages/                  # 主包页面
@@ -58,6 +59,14 @@
     │   ├── tabbar.js           # Tabbar 配置与状态
     │   └── user.js             # 用户信息与登录状态
     ├── router/                 # 路由配置（uni-mini-router）
+    ├── utils/                  # 通用工具
+    │   ├── indexUtils.js       # 防抖、节流、once
+    │   ├── objectUtils.js      # 深拷贝、合并、去重、查找
+    │   ├── urlParamsUtils.js   # 查询串与 trim
+    │   └── storageUtils.js     # 本地缓存（setItem/getItem/removeItem/clearStorage）
+    ├── verification/           # 校验工具（类型、表单）
+    │   ├── typeValidate.js     # 基础类型校验（isString、isNumber 等）
+    │   └── formValidate.js     # 表单校验（手机号、邮箱、金额等）
     ├── css/
     │   └── global.css          # 全局样式
     └── static/                 # 静态资源（图标等）
@@ -67,6 +76,7 @@
 
 通过 `@uni-ku/root` 实现，解决 uni-app 小程序中 App.vue 无法渲染模板的限制。
 
+- **全局生命周期与 JS 脚本只能在 `App.vue` 中编写**；`App.ku.vue` 中**不可编写**全局生命周期（onLaunch/onShow/onHide）及业务脚本，仅负责布局与全局组件挂载。
 - `<KuRootView />` 标记页面渲染位置（类似 `<router-view />`），**全局只能有一个**
 - 与 `<KuRootView />` 同级的组件会在**所有页面**中常驻
 
@@ -105,6 +115,25 @@ router.push({ path: '/subPages-test/component-test' })
 router.replace({ path: '/pages/index/index' })
 router.pushTab({ path: '/pages/api/index' })  // Tab 页跳转
 ```
+
+## 日期处理
+
+项目使用 [dayjs](https://day.js.org/) 做日期处理，轻量、无 DOM 依赖，适合小程序。
+
+```js
+import dayjs from 'dayjs'
+
+// 时间戳（毫秒）转日期并格式化
+dayjs(1710652800000).format('YYYY-MM-DD')   // "2024-03-17"
+dayjs(1710652800000).format('YYYY/MM/DD')   // "2024/03/17"
+dayjs(1710652800000).format('YYYY-MM-DD HH:mm:ss')
+
+// 当前时间、加减、自定义格式
+dayjs().format('YYYY-MM-DD')
+dayjs().add(1, 'day').format('YYYY/MM/DD')
+```
+
+秒级时间戳需乘 1000：`dayjs(timestamp * 1000).format('YYYY-MM-DD')`。格式占位符：`YYYY` 年、`MM` 月、`DD` 日、`HH` 时、`mm` 分、`ss` 秒，分隔符用 `-` 或 `/` 等均可。
 
 ## 代码规范
 

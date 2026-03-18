@@ -1,10 +1,17 @@
 <script setup>
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
 
-onLaunch(() => {})
-onShow(() => {})
-onHide(() => {})
-</script>
+const logStyle = 'color: green'
 
-<style>
-</style>
+onLaunch(() => {
+    console.log('%c[App.vue] onLaunch', logStyle)
+})
+
+onShow(() => {
+    console.log('%c[App.vue] onShow', logStyle)
+})
+
+onHide(() => {
+    console.log('%c[App.vue] onHide', logStyle)
+})
+</script>
